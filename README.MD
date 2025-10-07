@@ -59,7 +59,11 @@ pip install ultralytics fastapi uvicorn opencv-python matplotlib pandas jinja2
 # Windows
 
 env\Scripts\activate
+
 python -m src.train
+
 python -m src.inference
+
 python -m src.webfeed
+
 python -m app.app
