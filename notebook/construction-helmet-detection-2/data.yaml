@@ -1,0 +1,13 @@
+names:
+- with_helmet
+- without_helmet
+nc: 2
+roboflow:
+  license: CC BY 4.0
+  project: construction-helmet-detection
+  url: https://universe.roboflow.com/project/construction-helmet-detection/dataset/2
+  version: 2
+  workspace: project
+test: C:\Users\sharm\Downloads\Helmet_Detection\notebook\construction-helmet-detection-2\test\images
+train: C:\Users\sharm\Downloads\Helmet_Detection\notebook\construction-helmet-detection-2\train\images
+val: C:\Users\sharm\Downloads\Helmet_Detection\notebook\construction-helmet-detection-2\valid\images

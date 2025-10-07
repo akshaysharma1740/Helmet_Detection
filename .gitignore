@@ -1,0 +1,57 @@
+# =======================
+# Python
+# =======================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyd
+*.env
+venv/
+env/
+.venv/
+
+# =======================
+# Jupyter Notebook
+# =======================
+.ipynb_checkpoints/
+
+# =======================
+# Logs & temporary files
+# =======================
+*.log
+*.tmp
+*.swp
+output/
+exp/
+
+# =======================
+# ML / YOLO model files
+# =======================
+*.pt
+*.h5
+*.ckpt
+*.pkl
+model/
+weights/
+
+# =======================
+# OS generated files
+# =======================
+.DS_Store
+Thumbs.db
+
+# =======================
+# IDE / Editor
+# =======================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# =======================
+# Others
+# =======================
+*.csv
+*.tsv
+*.json
