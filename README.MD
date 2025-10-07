@@ -19,11 +19,13 @@ This project implements a **helmet detection system** using **YOLOv8**, allowing
 
 ## **Problem Statement**
 
-Workplace safety is critical in construction zones. Manually monitoring whether workers wear helmets is time-consuming and error-prone. Previous automated solutions using simple image classification were **inaccurate** because:
-
-- Low precision or recall for "without helmet" images
-- High false positives/negatives
-- Inefficient handling of live video streams
+1. Workplace safety in construction zones requires continuous monitoring of helmet usage.
+2. Manual monitoring is time-consuming, error-prone, and cannot scale to large sites.
+3. Existing automated solutions using simple image classification have:
+   - Low precision and recall for workers without helmets
+   - High false positives and false negatives
+   - Inefficient handling of live video streams
+4. There is a need for a robust, real-time helmet detection system that accurately detects helmet usage in dynamic and complex environments.
 
 ---
 
