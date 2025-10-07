@@ -15,6 +15,7 @@ env/
 # Jupyter Notebook
 # =======================
 .ipynb_checkpoints/
+notebook/
 
 # =======================
 # Logs & temporary files
