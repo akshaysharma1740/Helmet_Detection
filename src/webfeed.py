@@ -1,52 +1,88 @@
 import os
 import cv2
-import time
 from datetime import datetime
 from ultralytics import YOLO
 from src import config
 
-# Load YOLO model
-model = YOLO(config.BEST_PT_PATH)
+# -------------------------
+# CONFIGURATION
+# -------------------------
+MODEL_PATH = config.BEST_PT_PATH
+OUTPUT_DIR = config.ANNOTATED_DIR
+SAVE_OUTPUT = True          # Set False to disable saving
+CAMERA_INDEX = 0            # Default webcam
 
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # default camera
+# -------------------------
+# LOAD YOLO MODEL
+# -------------------------
+print("🔄 Loading YOLO model...")
+model = YOLO(MODEL_PATH)
+print("✅ Model loaded successfully!")
+
+# -------------------------
+# INITIALIZE CAMERA
+# -------------------------
+cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_DSHOW)
 if not cap.isOpened():
-    print("Could not open camera. Check index.")
+    print("❌ Could not open camera. Check index or permissions.")
     exit()
 
 fps = cap.get(cv2.CAP_PROP_FPS) or 10.0
-print("Camera FPS:", fps)
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+print(f"🎥 Camera initialized (FPS: {fps}, Size: {frame_width}x{frame_height})")
 
-# Output directory
-os.makedirs(config.ANNOTATED_DIR, exist_ok=True)
-
-# Optional video save
-save_output = True
-if save_output:
+# -------------------------
+# OUTPUT VIDEO SETUP
+# -------------------------
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+if SAVE_OUTPUT:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    out_path = os.path.join(config.ANNOTATED_DIR, f"webcam_output_{timestamp}.avi")
+    out_path = os.path.join(OUTPUT_DIR, f"webcam_output_{timestamp}.avi")
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     out = cv2.VideoWriter(out_path, fourcc, fps, (frame_width, frame_height))
+    print(f"💾 Saving annotated output to: {out_path}")
 
-print("Recording started...")
+print("✅ Press 'q' to quit the live feed.")
+
+# -------------------------
+# LIVE DETECTION LOOP
+# -------------------------
 while True:
     ret, frame = cap.read()
     if not ret:
+        print("⚠️ Frame not received — camera may be disconnected.")
         break
 
-    results = model.predict(frame)
-    annotated = results[0].plot()
-    cv2.imshow("YOLO Helmet Detection", annotated)
+    # YOLO prediction
+    results = model.predict(frame, conf=config.CONF, verbose=False)
 
-    if save_output:
+    # Annotate detections
+    annotated = results[0].plot()
+
+    # Display annotated live feed
+    cv2.imshow("🪖 YOLO Helmet Detection - Live", annotated)
+
+    # Print detected classes in console
+    for box in results[0].boxes:
+        cls_id = int(box.cls[0])
+        label = model.names[cls_id]
+        print("Detected:", label)
+
+    # Save video frame if enabled
+    if SAVE_OUTPUT:
         out.write(annotated)
 
+    # Exit on 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        print("Exiting...")
+        print("🛑 Exiting live stream...")
         break
 
+# -------------------------
+# CLEANUP
+# -------------------------
 cap.release()
-if save_output:
+if SAVE_OUTPUT:
     out.release()
 cv2.destroyAllWindows()
+print("✅ Resources released. Program ended.")

@@ -10,7 +10,7 @@ CLASSES = ["with_helmet", "without_helmet"]
 NC = len(CLASSES)
 
 IMG_SIZE = 416
-BATCH_SIZE = 10
+BATCH_SIZE = 50
 EPOCHS = 20
 LR = 1e-3
 CONF = 0.3
@@ -23,4 +23,4 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(WEIGHTS_DIR, exist_ok=True)
 os.makedirs(ANNOTATED_DIR, exist_ok=True)
 
-BEST_PT_PATH = os.path.join(WEIGHTS_DIR, "best.pt")
+BEST_PT_PATH = r"C:\Users\sharm\Downloads\Helmet_Detection\output\project\project\weights\best.pt"
