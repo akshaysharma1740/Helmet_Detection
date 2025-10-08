@@ -19,13 +19,8 @@ This project implements a **helmet detection system** using **YOLOv8**, allowing
 
 ## **Problem Statement**
 
-1. Workplace safety in construction zones requires continuous monitoring of helmet usage.
-2. Manual monitoring is time-consuming, error-prone, and cannot scale to large sites.
-3. Existing automated solutions using simple image classification have:
-   - Low precision and recall for workers without helmets
-   - High false positives and false negatives
-   - Inefficient handling of live video streams
-4. There is a need for a robust, real-time helmet detection system that accurately detects helmet usage in dynamic and complex environments.
+1. Manual monitoring of helmet usage in construction zones is time-consuming, error-prone, and unscalable.
+2. Existing automated solutions often fail due to low accuracy and poor handling of live video.
 
 ---
 
@@ -54,8 +49,7 @@ The solution uses **YOLOv8 object detection**, which provides:
 2. Install dependencies (Python 3.10+ recommended):
 
 ```bash
-pip install ultralytics fastapi uvicorn opencv-python matplotlib pandas jinja2
-
+pip install -r requirements.txt
 ```
 
 # Windows
@@ -64,8 +58,6 @@ env\Scripts\activate
 
 python -m src.train
 
-python -m src.inference
+python -m src.webfeed(live monitoring)
 
-python -m src.webfeed
-
-python -m app.app
+python -m app.app(for non-technical users to upload images)
